@@ -1,1 +1,2 @@
 require 'elevated_form_builder'
+require 'error_handling_form_builder'
