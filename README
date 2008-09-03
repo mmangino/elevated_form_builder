@@ -2,7 +2,9 @@ ElevatedFormBuilder
 ===================
 
 Form builder for Elevated Rails projects.
-You must create  app/views/forms/_field and app/views_forms/_field_with_errors partials to use the ErrorHandlingFormBuilder
+You must create  app/views/forms/_field and app/views/forms/_field_with_errors partials to use the TemplateFormBuilder
+
+If you want to use multiple form builders with different templates, you can subclass TemplateFormBuilder and override template_without_error and template_with_error
 
 
 

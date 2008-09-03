@@ -1,4 +1,4 @@
-class ErrorHandlingFormBuilder < ActionView::Helpers::FormBuilder
+class TemplateFormBuilder < ActionView::Helpers::FormBuilder
   second_param = %w(text_field text_area hidden_field password_field file_field check_box date_select datetime_select time_select)
   third_param = %w(radio_button country_select select time_zone_select)
   fifth_param = %w(collection_select)
@@ -22,13 +22,21 @@ class ErrorHandlingFormBuilder < ActionView::Helpers::FormBuilder
     create_with_offset(name,3)
   end
   
+  def template_with_error
+    "forms/field_with_errors"
+  end
+  
+  def template_without_error
+    "forms/field"
+  end
+  
   def build_shell(field,options)
     @template.capture do
       locals={:field_id=>field_id(field), :element => yield,:label=>label_for(field,options)}
       if has_errors_on?(field)
-        @template.render :partial=>"forms/field_with_errors", :locals=>locals.merge(:error=>error_message(field,options))
+        @template.render :partial=>template_with_error, :locals=>locals.merge(:error=>error_message(field,options))
       else
-        @template.render :partial=>"forms/field", :locals=>locals        
+        @template.render :partial=>template_without_error, :locals=>locals        
       end
     end
   end
@@ -42,7 +50,7 @@ class ErrorHandlingFormBuilder < ActionView::Helpers::FormBuilder
   end
   
   def label_for(field,options)
-    options[:label] || field.to_s.humanize
+    options.delete(:label) || field.to_s.humanize
   end
   
   def error_message(field,options)
