@@ -32,7 +32,8 @@ class TemplateFormBuilder < ActionView::Helpers::FormBuilder
   
   def build_shell(field,options)
     @template.capture do
-      locals={:field_id=>field_id(field), :element => yield,:label=>label_for(field,options)}
+      label=label_for(field,options)
+      locals={:field_id=>field_id(field), :element => yield,:label=>label}
       if has_errors_on?(field)
         @template.render :partial=>template_with_error, :locals=>locals.merge(:error=>error_message(field,options))
       else
