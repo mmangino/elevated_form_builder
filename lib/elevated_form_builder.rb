@@ -41,21 +41,21 @@ class ElevatedFormBuilder < ActionView::Helpers::FormBuilder
       options.delete :hide_errors
       return yield
     end
-  
+    
     label = options.delete(:label) || Inflector.humanize(method.to_s)
     right_label = options.delete(:right_label)
-    error_message = options[:only_error_message].blank? ? label + " " + error_message_for(object, method) : object.errors[method] unless object.nil? || object.errors[method].blank?
+    error_message = options[:only_error_message].blank? ? " " + error_message_for(object, method) : object.errors[method] unless object.nil? || object.errors[method].blank?
     error_style = "fieldWithErrors" unless error_message.blank?
     error_message = "<div class='form_error_message' id='error_for_#{method}'>#{error_message}</div>" unless error_message.blank?
 
-    lay_out_form_field(label, error_message, right_label, &block)
+    lay_out_form_field(label, method, error_message, right_label, &block)
   end
 
 
-  def lay_out_form_field(label, error, right_label)
+  def lay_out_form_field(label, method, error, right_label)
     @template.content_tag "p", 
                           @template.content_tag("label", label, 
-                                                :for => "#{@object_name}_#{label.downcase}") + 
+                                                :for => "#{@object_name}_#{method}") + 
                                                 '<br />' + 
                           "#{error} #{yield} #{right_label}"
   end
