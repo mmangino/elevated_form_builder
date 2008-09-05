@@ -51,7 +51,7 @@ class ElevatedFormBuilder < ActionView::Helpers::FormBuilder
     lay_out_form_field(label, method, error_message, right_label, &block)
   end
 
-
+  
   def lay_out_form_field(label, method, error, right_label)
     @template.content_tag "p", 
                           @template.content_tag("label", label, 
