@@ -47,7 +47,7 @@ class TemplateFormBuilder < ActionView::Helpers::FormBuilder
   end
   
   def field_id(field)
-    "#{self.object.class}_#{field}"
+    "#{self.object.class}_#{field}".underscore
   end
   
   def label_for(field,options)
