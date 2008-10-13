@@ -1,4 +1,4 @@
-module TemplateFormBuilder
+class TemplateFormBuilder < ActionView::Helpers::FormBuilder
   second_param = %w(text_field text_area hidden_field password_field file_field check_box date_select datetime_select time_select)
   third_param = %w(radio_button country_select select time_zone_select)
   fifth_param = %w(collection_select)
@@ -23,11 +23,11 @@ module TemplateFormBuilder
   end
 
   def template_with_error
-    "forms/field_with_errors"
+    "partials/forms/field_with_errors"
   end
 
   def template_without_error
-    "forms/field"
+    "partials/forms/field"
   end
 
   def build_shell(field,options)
