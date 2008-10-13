@@ -1,17 +1,17 @@
-class TemplateFormBuilder < ActionView::Helpers::FormBuilder
+module TemplateFormBuilder
   second_param = %w(text_field text_area hidden_field password_field file_field check_box date_select datetime_select time_select)
   third_param = %w(radio_button country_select select time_zone_select)
   fifth_param = %w(collection_select)
-  
+
   def self.create_with_offset(name,offset)
     define_method name do |field,*args|
       options = args[offset] || {}
       build_shell(field,options) do
         super
       end
-    end    
+    end  
   end
-  
+
   second_param.each do |name|
     create_with_offset(name,0)
   end
@@ -21,15 +21,15 @@ class TemplateFormBuilder < ActionView::Helpers::FormBuilder
   fifth_param.each do |name|
     create_with_offset(name,3)
   end
-  
+
   def template_with_error
     "forms/field_with_errors"
   end
-  
+
   def template_without_error
     "forms/field"
   end
-  
+
   def build_shell(field,options)
     @template.capture do
       label=label_for(field,options)
@@ -41,19 +41,19 @@ class TemplateFormBuilder < ActionView::Helpers::FormBuilder
       end
     end
   end
-  
+
   def has_errors_on?(field)
     ! (object.nil? || object.errors.on(field).blank?)
   end
-  
+
   def field_id(field)
     "#{self.object.class}_#{field}".underscore
   end
-  
+
   def label_for(field,options)
     options.delete(:label) || field.to_s.humanize
   end
-  
+
   def error_message(field,options)
     if has_errors_on?(field)
       errors=object.errors.on(field)
@@ -62,5 +62,5 @@ class TemplateFormBuilder < ActionView::Helpers::FormBuilder
       ""
     end
   end
-  
+
 end

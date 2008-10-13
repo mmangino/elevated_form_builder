@@ -1,4 +1,4 @@
-class ElevatedFormBuilder < ActionView::Helpers::FormBuilder
+module ElevatedFormBuilder
   [ :time_zone_select, :text_field, :password_field, :text_area, :datetime_select, :check_box, :date_select, :link_to, :file_field ].each do |field_type|
     define_method field_type do |*args|
       name = args.first

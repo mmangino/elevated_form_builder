@@ -1,7 +1,13 @@
 require 'fileutils'
-FileUtils.copy(Dir[File.dirname(__FILE__) + '/lib/elevated_form_builder.rb'], File.dirname(__FILE__) + '/../../../lib/')
-FileUtils.copy(Dir[File.dirname(__FILE__) + '/lib/template_form_builder.rb'], File.dirname(__FILE__) + '/../../../lib/')
-FileUtils.copy(Dir[File.dirname(__FILE__) + '/app/helpers/application_helper.rb'], File.dirname(__FILE__) + '/../../../app/helpers/')
-FileUtils.copy(Dir[File.dirname(__FILE__) + '/examples/_field_with_errors.html.erb'], File.dirname(__FILE__) + '/../../../app/views/partials/forms/')
-FileUtils.copy(Dir[File.dirname(__FILE__) + '/examples/_field.html.erb'], File.dirname(__FILE__) + '/../../../app/views/partials/forms/')
+mkdir(File.join(RAILS_ROOT, "app/views/partials/forms")) unless File.exist?(File.join(RAILS_ROOT, "app/views/forms"))
+field_file = '_field.html.erb'
+FileUtils.cp_r(
+  File.join(File.dirname(__FILE__), "/lib/forms/_field.html.erb"),
+  File.join(RAILS_ROOT, "app/views/partials/forms/", field_file)
+)
+field_with_errors_file = '_field_with_errors.html.erb'
+FileUtils.cp_r(
+  File.join(File.dirname(__FILE__), "/lib/forms/_field_with_errors.html.erb")
+  File.join(RAILS_ROOT, "app/views/partials/forms/", field_with_errors)
+)
 puts IO.read(File.join(File.dirname(__FILE__), 'README'))

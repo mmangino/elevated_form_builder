@@ -1,10 +1,26 @@
 ElevatedFormBuilder
 ===================
 
-Form builder for Elevated Rails projects.
+Form builder for Rails projects.
 
-You must create  app/views/forms/_field and app/views/forms/_field_with_errors partials to use the TemplateFormBuilder
+===================
+
+You can edit  app/views/forms/_field and app/views/forms/_field_with_errors partials to use the TemplateFormBuilder
 
 If you want to use multiple form builders with different templates, you can subclass TemplateFormBuilder and override template_without_error and template_with_error
+
+Remember to put this in your application helper:
+
+def error_handling_form_for(record_or_name_or_array, *args, &proc)
+  options = args.detect { |argument| argument.is_a?(Hash) }
+  if options.nil?
+    options = { :builder => TemplateFormBuilder }
+    args << options
+  end
+  options[:builder] = TemplateFormBuilder unless options.nil?
+  form_for(record_or_name_or_array, *args, &proc)
+end
+
+===================
 
 Copyright (c) 2007 Elevated Rails, released under the MIT license
